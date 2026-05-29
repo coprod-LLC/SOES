@@ -87,6 +87,20 @@ uint32_t ESC_download_post_objecthandler (uint16_t index, uint8_t subindex, uint
    return 0;
 }
 
+/** Hook called when an SDO download aborts before the post-download handler runs.
+ *
+ * @param[in] index      = index of the aborted SDO download
+ * @param[in] subindex   = sub-index of the aborted SDO download
+ * @param[in] flags      = object flags (may include @c COMPLETE_ACCESS_FLAG)
+ */
+void ESC_abort_object_download_handler (uint16_t index, uint8_t subindex, uint16_t flags)
+{
+   if (ESCvar.abort_object_download_hook != NULL)
+   {
+      ESCvar.abort_object_download_hook(index, subindex, flags);
+   }
+}
+
 /** Function to pre-qualify the incoming SDO upload.
  *
  * @param[in] index      = index of SDO upload request to handle

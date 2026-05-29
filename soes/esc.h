@@ -326,6 +326,9 @@ typedef struct esc_cfg
    uint32_t (*post_object_download_hook) (uint16_t index,
          uint8_t subindex,
          uint16_t flags);
+   void (*abort_object_download_hook) (uint16_t index,
+         uint8_t subindex,
+         uint16_t flags);
    uint32_t (*pre_object_upload_hook) (uint16_t index,
          uint8_t subindex,
          void * data,
@@ -449,6 +452,9 @@ typedef struct
          size_t size,
          uint16_t flags);
    uint32_t (*post_object_download_hook) (uint16_t index,
+         uint8_t subindex,
+         uint16_t flags);
+   void (*abort_object_download_hook) (uint16_t index,
          uint8_t subindex,
          uint16_t flags);
    uint32_t (*pre_object_upload_hook) (uint16_t index,

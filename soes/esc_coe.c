@@ -286,6 +286,7 @@ static void set_state_idle (uint8_t reusembx,
    if (abortcode != 0)
    {
       SDO_abort (reusembx, index, subindex, abortcode);
+      ESC_abort_object_download_handler (index, subindex, ESCvar.flags);
    }
 
    MBXcontrol[0].state = MBXstate_idle;
@@ -888,6 +889,7 @@ static void SDO_download (void)
             }
             else
             {
+               ESC_abort_object_download_handler (index, subindex, (objd + nsub)->flags);
                SDO_abort (0, index, subindex, abort);
             }
          }
@@ -1065,6 +1067,7 @@ static void SDO_downloadsegment (void)
 
             if(ESCvar.frags > ESCvar.fragsleft + size)
             {
+               ESC_abort_object_download_handler (ESCvar.index, ESCvar.subindex, ESCvar.flags);
                set_state_idle (0, ESCvar.index, ESCvar.subindex, ABORT_TYPEMISMATCH);
                return;
             }
@@ -1074,6 +1077,7 @@ static void SDO_downloadsegment (void)
 
             if ((nidx < 0) || (nsub < 0))
             {
+               ESC_abort_object_download_handler (ESCvar.index, ESCvar.subindex, ESCvar.flags);
                set_state_idle (0, ESCvar.index, ESCvar.subindex, ABORT_NOOBJECT);
                return;
             }
@@ -1110,6 +1114,10 @@ static void SDO_downloadsegment (void)
       }
 
       MBXcontrol[MBXout].state = MBXstate_outreq;
+   }
+   else if (ESCvar.segmented != 0)
+   {
+      ESC_abort_object_download_handler (ESCvar.index, ESCvar.subindex, ESCvar.flags);
    }
 
    set_state_idle (0, 0, 0, 0);
