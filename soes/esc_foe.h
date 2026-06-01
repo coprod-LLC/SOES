@@ -72,6 +72,8 @@ typedef struct CC_PACKED
 /* Initializes FoE state. */
 void FOE_config (foe_cfg_t * cfg);
 void FOE_init (void);
+/** @return Non-zero when an FoE transfer is in progress. */
+uint8_t FOE_isBusy(void);
 void ESC_foeprocess (void);
 
 #endif

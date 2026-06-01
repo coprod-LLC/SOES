@@ -210,6 +210,11 @@ void FOE_init ()
    FOEvar.fbufposition = 0;
 }
 
+uint8_t FOE_isBusy(void)
+{
+   return (FOEvar.foestate != FOE_READY) ? 1U : 0U;
+}
+
 /** Function for sending an FOE abort frame.
  *
  * @param[in] code   = abort code
