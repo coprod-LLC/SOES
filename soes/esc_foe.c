@@ -210,7 +210,11 @@ void FOE_init ()
    FOEvar.fbufposition = 0;
 }
 
-uint8_t FOE_isBusy(void)
+/** Returns whether an FoE transfer is in progress.
+ *
+ * @return Non-zero when @c FOEvar.foestate is not @c FOE_READY.
+ */
+uint8_t FOE_isBusy (void)
 {
    return (FOEvar.foestate != FOE_READY) ? 1U : 0U;
 }
